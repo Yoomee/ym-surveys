@@ -1,3 +1,6 @@
+.btn-group.pull-right.mv-1
+  =link_to "Download as CSV", survey_survey_submissions_path(:format =>  "csv"), :class => 'btn', :icon => 'arrow-down'
+
 %table.table
   %thead
     %tr
@@ -9,4 +12,4 @@
       %tr
         %td=submission.created_at.strftime("%m %b %G at %H:%M")
         %td="#{submission.user.first_name} #{submission.user.last_name}"
-        %td=link_to("View", survey_submission_path(submission.survey_id, submission.id))
+        %td=link_to("View", survey_survey_submission_path(submission.survey, submission))

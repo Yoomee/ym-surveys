@@ -2,7 +2,6 @@ module YmSurveys::SurveySubmissionsController
 
   def create
     @submission = SurveySubmission.new(params[:survey_submission].merge({:user_id => current_user.id}))
-
     if @submission.is_valid?
       if @submission.last_step?
         @submission.save
@@ -21,6 +20,10 @@ module YmSurveys::SurveySubmissionsController
 
   def index
     @survey_submissions = SurveySubmission.where(:survey_id => params[:survey_id])
+    respond_to do |format|
+      format.html
+      format.csv { send_data @survey_submissions.to_csv(params[:survey_id]), :filename => "#{@survey_submissions.first.survey.name}.csv" }
+    end
   end
 
   def show

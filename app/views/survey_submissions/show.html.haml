@@ -5,8 +5,10 @@
       %dt.mt-1
         %strong=question.name
       %dd
-        / -response = @submission.survey_question_responses.find_by_survey_question_id(question.id).response
-        / -if response.is_a?(Array)
-        /   An array
-        / -else
-        /   =@submission.survey_question_responses.find_by_survey_question_id(question.id).response
+        -response = @submission.survey_question_responses.find_by_survey_question_id(question.id).response
+        -if response.is_a?(Array)
+          %ul
+            -response.each do |x|
+              %li=x
+        -else
+          =@submission.survey_question_responses.find_by_survey_question_id(question.id).response

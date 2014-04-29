@@ -1,7 +1,7 @@
 class CreateYmSurveyQuestionResponses < ActiveRecord::Migration
   def change
     create_table :survey_question_responses do |t|
-      t.string :response
+      t.text :response
 
       t.references :survey_question, :index => true
       t.references :survey_submission, :index => true

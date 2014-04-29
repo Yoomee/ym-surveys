@@ -6,6 +6,24 @@ module YmSurveys::SurveySubmission
     base.belongs_to :user
     base.has_many :survey_question_responses
     base.send(:accepts_nested_attributes_for, :survey_question_responses)
+    base.extend(ClassMethods)
+  end
+
+  module ClassMethods
+    def to_csv(survey_id)
+      survey = Survey.find(survey_id)
+      column_names = ["timestamp", "First Name", "Last Name"] + survey.question_groups.map { |x| x.questions.map(&:name) }.flatten
+      CSV.generate do |csv|
+        csv << column_names
+        survey.submissions.each do |submission|
+          standard_fields = []
+          standard_fields << submission.created_at
+          standard_fields << submission.user.first_name
+          standard_fields << submission.user.last_name
+          csv << standard_fields + submission.survey_question_responses.map {|x| [*x.response].join("\n") }
+        end
+      end
+    end
   end
 
   def build_responses
