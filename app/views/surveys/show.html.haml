@@ -1,0 +1,16 @@
+=semantic_form_for @submission do |f|
+  =f.inputs do
+    =f.input :survey_id, :as => :hidden
+    =f.input :current_step, :as => :hidden
+    %h2=@question_group.heading
+    %p=simple_format(@question_group.heading_text.gsub(/\{\{(\w+)\}\}/) { |x| current_user.send($1) } )
+
+    =f.semantic_fields_for :survey_question_responses do |q|
+      -@question = q.object.survey_question
+      -if @question.survey_question_group_id == @submission.current_step
+        =q.input :response, :as => @question.field_type, :label => @question.name, :collection => @question.options, :input_html => { :rows => 4 }
+      -else
+        =q.input :response, :as => :hidden
+      =q.input :survey_question_id, :as => :hidden
+  =f.actions do
+    =f.action :submit, :label => @submission.last_step? ? "Finish" : "Next", :wrapper_html => { :class => 'pull-right mb-1' }

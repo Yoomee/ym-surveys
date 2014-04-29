@@ -1,0 +1,12 @@
+-@submission.survey.question_groups.each do |question_group|
+  %h4=question_group.heading
+  %dl
+    -question_group.questions.each do |question|
+      %dt.mt-1
+        %strong=question.name
+      %dd
+        / -response = @submission.survey_question_responses.find_by_survey_question_id(question.id).response
+        / -if response.is_a?(Array)
+        /   An array
+        / -else
+        /   =@submission.survey_question_responses.find_by_survey_question_id(question.id).response
