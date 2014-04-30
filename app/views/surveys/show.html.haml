@@ -6,7 +6,7 @@
     =f.input :survey_id, :as => :hidden
     =f.input :current_step, :as => :hidden
     %h2=@question_group.heading
-    %p=simple_format(@question_group.heading_text.gsub(/\{\{(\w+)\}\}/) { |x| current_user.send($1) } )
+    %p=simple_format(substitute_user_placeholders(@question_group.heading_text, current_user))
 
     =f.semantic_fields_for :survey_question_responses do |q|
       -@question = q.object.survey_question

@@ -1,0 +1,22 @@
+=simple_format(substitute_user_placeholders(@submission.survey.email_text, @user))
+
+<h4>Your Submission</h4>
+-@submission.survey.question_groups.each do |question_group|
+  -if question_group.questions.count > 0
+    %table{:style => "font-family: ‘Arial Black’, Gadget, sans-serif; font-size: 12px;"}
+      %thead
+        %tr
+          %th{:style => "text-align: left; background-color: #E6E6E6; padding: 10px;"}=question_group.heading
+      %tbody
+        -question_group.questions.each do |question|
+          %tr
+            %td{:style => "font-weight: bold;"}=question.name
+          %tr
+            %td
+              -response = @submission.survey_question_responses.find_by_survey_question_id(question.id).try(:response)
+              -if response.is_a?(Array)
+                %ul
+                  -response.each do |x|
+                    %li=x
+              -else
+                =response
