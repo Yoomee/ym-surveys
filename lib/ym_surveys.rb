@@ -1,4 +1,5 @@
 require 'ym_core'
+require 'ym_permalinks'
 require "ym_surveys/engine"
 
 module YmSurveys
