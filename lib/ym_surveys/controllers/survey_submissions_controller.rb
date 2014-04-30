@@ -1,5 +1,9 @@
 module YmSurveys::SurveySubmissionsController
 
+  def self.included(base)
+    base.load_and_authorize_resource
+  end
+
   def create
     @submission = SurveySubmission.new(params[:survey_submission].merge({:user_id => current_user.id}))
     if @submission.is_valid?
