@@ -10,6 +10,6 @@
   %tbody
     -@survey_submissions.each do |submission|
       %tr
-        %td=submission.created_at.strftime("%m %b %G at %H:%M")
+        %td=submission.created_at.strftime("%d %b %Y, %H:%M")
         %td="#{submission.user.first_name} #{submission.user.last_name}"
         %td=link_to("View", survey_survey_submission_path(submission.survey, submission))
