@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :surveys do
     resources :survey_submissions, :only => [:index, :show]
     post '/steps/:step_id', to: 'survey_submissions#create', :as => :step
+    get 'thanks'
   end
   resources :survey_submissions, :only => [:create]
 end

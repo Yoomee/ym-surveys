@@ -1,3 +1,4 @@
+source "https://yoomee:wLjuGMTu30AvxVyIrq3datc73LVUkvo@gems.yoomee.com"
 source "https://rubygems.org"
 
 # Declare your gem's dependencies in ym_surveys.gemspec.

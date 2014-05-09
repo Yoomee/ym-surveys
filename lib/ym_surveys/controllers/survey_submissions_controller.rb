@@ -9,9 +9,8 @@ module YmSurveys::SurveySubmissionsController
     if @submission.is_valid?
       if @submission.last_step?
         @submission.save
-        flash[:notice] = "Thank you for filling in #{@submission.survey.name}"
         SurveyMailer.survey_completed(@submission, current_user).deliver if @submission.survey.email_text.present?
-        redirect_to("/team-v")
+        redirect_to survey_thanks_path
       else
         @submission.next_step!
         @question_group = SurveyQuestionGroup.find @submission.current_step

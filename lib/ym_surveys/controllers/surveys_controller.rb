@@ -13,4 +13,7 @@ module YmSurveys::SurveysController
   def index
     @surveys = Survey.all
   end
+
+  def thanks
+  end
 end
