@@ -43,6 +43,10 @@ module YmSurveys::SurveySubmission
     @current_step = value.to_i
   end
 
+  def current_step_index
+    steps.index(current_step) + 1
+  end
+
   def steps
     survey.question_groups.map{ |x| x.id }
   end

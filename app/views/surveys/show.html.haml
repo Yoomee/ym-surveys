@@ -1,7 +1,7 @@
 -if @submission.survey.image.present?
   =image_for(@submission.survey, "100x100#", :class => "mt-1")
 
-=semantic_form_for @submission do |f|
+=semantic_form_for @submission, :url => survey_step_path(@submission.survey, @submission.current_step) do |f|
   =f.inputs do
     =f.input :survey_id, :as => :hidden
     =f.input :current_step, :as => :hidden

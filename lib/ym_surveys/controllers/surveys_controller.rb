@@ -5,7 +5,6 @@ module YmSurveys::SurveysController
   end
 
   def show
-    @survey = Survey.find(params[:id])
     @submission ||= @survey.submissions.build(:user => current_user)
     @submission.build_responses
     @question_group = SurveyQuestionGroup.find @submission.current_step
