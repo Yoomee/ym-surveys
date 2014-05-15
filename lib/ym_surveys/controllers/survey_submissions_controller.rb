@@ -26,7 +26,7 @@ module YmSurveys::SurveySubmissionsController
     @survey_submissions = SurveySubmission.where(:survey_id => params[:survey_id]).sort_by(&:created_at)
     respond_to do |format|
       format.html
-      format.csv { send_data @survey_submissions.to_csv(params[:survey_id]), :filename => "#{@survey_submissions.first.survey.name}.csv" }
+      format.csv { send_data SurveySubmission.to_csv(params[:survey_id]), :filename => "#{@survey_submissions.first.survey.name}.csv" }
     end
   end
 
