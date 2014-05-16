@@ -5,7 +5,7 @@ module YmSurveys::SurveysController
   end
 
   def show
-    if !@survey.can_take_multiple && current_user && SurveySubmission.where(:user_id => current_user.id).count > 0
+    if !@survey.can_take_multiple && current_user && !current_user.is_admin? && SurveySubmission.where(:user_id => current_user.id).count > 0
       redirect_to survey_already_taken_path(@survey)
     end
     @submission ||= @survey.submissions.build(:user => current_user)
