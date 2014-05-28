@@ -6,6 +6,7 @@ class CreateSurveyQuestions < ActiveRecord::Migration
       t.text :options
       t.boolean :required, :default => false
       t.string :default_to
+      t.string :field_format
 
       t.references :survey_question_group, :index => true
 
