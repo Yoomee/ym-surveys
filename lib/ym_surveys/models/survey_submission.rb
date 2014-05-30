@@ -32,6 +32,7 @@ module YmSurveys::SurveySubmission
     survey.question_groups.each do |question_group|
       question_group.questions.each do |question|
         if question.default_to
+          question.update_attribute(:field_format, question.default_to)
           default_value = question.get_default(self.user) || nil
         end
         self.survey_question_responses.build(:survey_question_id => question.id, :response => default_value)
