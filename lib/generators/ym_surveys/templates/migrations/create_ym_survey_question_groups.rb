@@ -3,7 +3,7 @@ class CreateYmSurveyQuestionGroups < ActiveRecord::Migration
     create_table :survey_question_groups do |t|
       t.string :heading
       t.text :heading_text
-
+      t.int  :position
       t.references :survey, :index => true
 
       t.timestamps
