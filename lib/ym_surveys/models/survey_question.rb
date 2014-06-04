@@ -1,7 +1,7 @@
 module YmSurveys::SurveyQuestion
 
   def self.included(base)
-    base.send(:attr_accessible, :name, :field_type, :options, :required, :default_to)
+    base.send(:attr_accessible, :name, :field_type, :options, :required, :default_to, :help_text)
     base.send(:serialize, :options)
     base.belongs_to :survey_question_group
   end

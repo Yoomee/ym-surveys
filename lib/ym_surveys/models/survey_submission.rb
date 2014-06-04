@@ -61,4 +61,22 @@ module YmSurveys::SurveySubmission
     end
   end
 
+  def user
+    if current_step == 1
+      return super if super.present?
+    end
+    first_name_question_id = SurveyQuestion.find_by_default_to("first_name").id
+    last_name_question_id = SurveyQuestion.find_by_default_to("last_name").id
+    email_question_id = SurveyQuestion.find_by_default_to("email").id
+    dob_question_id = SurveyQuestion.find_by_default_to("dob").id
+    first_name = self.survey_question_responses.select{ |x| x.survey_question_id == first_name_question_id }.first.try(:response)
+    last_name = self.survey_question_responses.select{ |x| x.survey_question_id == last_name_question_id }.first.try(:response)
+    email = self.survey_question_responses.select{ |x| x.survey_question_id == email_question_id }.first.try(:response)
+    dob = self.survey_question_responses.select{ |x| x.survey_question_id == dob_question_id }.first.try(:response)
+
+
+    User.new(:first_name => first_name, :last_name => last_name, :email => email, :dob => dob)
+  end
+
+
 end
