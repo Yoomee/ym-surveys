@@ -12,17 +12,15 @@ module YmSurveys::SurveySubmission
   module ClassMethods
     def to_csv(survey_id)
       survey = Survey.find(survey_id)
-      column_names = ["timestamp", "First Name", "Last Name", "E-mail", "DOB"] + survey.question_groups.map { |x| x.questions.map(&:name) }.flatten
+      column_names = ["timestamp", "submission id"] + survey.question_groups.map { |x| x.questions.map(&:name) }.flatten
+      question_ids_in_order = survey.question_groups.map{|g| g.question_ids}.flatten
       CSV.generate do |csv|
         csv << column_names
         survey.submissions.each do |submission|
           standard_fields = []
           standard_fields << submission.created_at
-          standard_fields << submission.user.first_name
-          standard_fields << submission.user.last_name
-          standard_fields << submission.user.email
-          standard_fields << submission.user.dob.strftime("%d/%m/%Y")
-          csv << standard_fields + submission.survey_question_responses.map {|x| [*x.response].join("\n") }
+          standard_fields << submission.id
+          csv << standard_fields + submission.survey_question_responses.sort{|x,y| question_ids_in_order.index(x.survey_question_id) <=> question_ids_in_order.index(y.survey_question_id)}.map {|x| [*x.response].join("\n") }
         end
       end
     end
