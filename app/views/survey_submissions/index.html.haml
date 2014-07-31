@@ -1,5 +1,6 @@
-.btn-group.pull-right.mv-1
-  =link_to "Download as CSV", survey_survey_submissions_path(:format =>  "csv"), :class => 'btn', :icon => 'arrow-down'
+-if current_user.admin?
+  .btn-group.pull-right.mv-1
+    =link_to "Download as CSV", survey_survey_submissions_path(:format =>  "csv"), :class => 'btn', :icon => 'arrow-down'
 
 %table.table
   %thead
