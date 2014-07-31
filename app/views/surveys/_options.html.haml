@@ -1,0 +1,23 @@
+.options{:style => ("display: none;" unless !!(f.object.field_type =~ /check_boxes_with_other|check_boxes|radio/))}
+  =label_tag "Options"
+  %ul.question-options.js-sortable-question-options
+    -f.object.options ||= []
+    -f.object.options.each do |option|
+      %li
+        .row.js-question-option
+          .col-lg-6
+            .input-group
+              %span.input-group-addon
+                %i.fa.fa-bars.reorder-bars
+
+              = f.text_field "options][",:value=>option,:id=>"item-#{SecureRandom.uuid}", :class => "form-control js-option-input"
+              %span.input-group-btn.pl-1
+                %button.close.js-remove-option{type: "button" }
+                  %span{"aria-hidden" => "true"} &#215;
+                  %span.sr-only Close
+
+    .row.js-question-option
+      .col-lg-6
+        = text_field_tag '', 'Click to add another option', :class => "form-control js-add-other add-other"
+
+

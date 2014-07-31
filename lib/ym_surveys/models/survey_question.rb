@@ -7,7 +7,12 @@ module YmSurveys::SurveyQuestion
   end
 
   def get_default(user)
-    if default_to.nil? || user.nil? then return end
-    user.send(default_to)
+    if default_to.nil? || default_to.empty? || user.nil? then return end
+    default_value = user.send(default_to)
   end
+
+  def field_type
+    ActiveSupport::StringInquirer.new read_attribute(:field_type).to_s
+  end
+
 end

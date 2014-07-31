@@ -8,18 +8,15 @@
     %h2=@question_group.heading
     %p=simple_format(substitute_user_placeholders(@question_group.heading_text, current_user))
 
-    =f.semantic_fields_for :survey_question_responses do |q|
+    =f.semantic_fields_for :survey_question _responses do |q|
       -@question = q.object.survey_question
-      -if @question.survey_question_group_id == @submission.current_step
-        =q.input :response, :as => @question.field_type, :label => @question.name, :collection => @question.options, :input_html => { :rows => 4 }
-      -else
-        .hide
-          =q.input :response, :as => @question.field_type, :label => @question.name, :collection => @question.options, :input_html => { :rows => 4 }
+        %div{:class => ("hide" unless @question.survey_question_group_id == @submission.current_step)}
+          %span.help-block You must be running the project
+        =q.question_input :response, q.object
+
       =q.input :survey_question_id, :as => :hidden
   =f.actions do
     =f.action :submit, :label => @submission.last_step? ? "Finish" : "Next", :wrapper_html => { :class => 'pull-right mb-1' }
-
-
 
 -step_count = 100 / (@submission.survey.question_groups.count)
 -progress = (@submission.survey.question_groups.index(@question_group)) * step_count

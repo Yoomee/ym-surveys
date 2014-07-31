@@ -29,13 +29,25 @@ module YmSurveys::SurveySubmission
   def build_responses
     survey.question_groups.each do |question_group|
       question_group.questions.each do |question|
-        if question.default_to
-          question.update_attribute(:field_format, question.default_to)
+        if !question.default_to.empty?
+          question.assign_attributes({:field_format => question.default_to}, :without_protection => true)
           default_value = question.get_default(self.user) || nil
         end
         self.survey_question_responses.build(:survey_question_id => question.id, :response => default_value)
       end
     end
+  end
+
+  def next_step
+    question_group = SurveyQuestionGroup.find steps[steps.index(current_step)+1]
+    if question_group.dependence_logic.present?
+      d = question_group.dependence_logic.split /#/
+      question_response = survey_question_responses.select {|x| x.response == d[1] && x.survey_question.name == d[0] }
+      if question_response.blank?
+        return steps[steps.index(current_step)+2] || "-1"
+      end
+    end
+    super
   end
 
   def current_step=(value)
@@ -47,7 +59,7 @@ module YmSurveys::SurveySubmission
   end
 
   def steps
-    survey.question_groups.map{ |x| x.id }
+    survey.question_groups.order(:position).map{ |x| x.id }
   end
 
   def is_valid?
@@ -58,23 +70,5 @@ module YmSurveys::SurveySubmission
       end
     end
   end
-
-  def user
-    if current_step == 1
-      return super if super.present?
-    end
-    first_name_question_id = SurveyQuestion.find_by_default_to("first_name").id
-    last_name_question_id = SurveyQuestion.find_by_default_to("last_name").id
-    email_question_id = SurveyQuestion.find_by_default_to("email").id
-    dob_question_id = SurveyQuestion.find_by_default_to("dob").id
-    first_name = self.survey_question_responses.select{ |x| x.survey_question_id == first_name_question_id }.first.try(:response)
-    last_name = self.survey_question_responses.select{ |x| x.survey_question_id == last_name_question_id }.first.try(:response)
-    email = self.survey_question_responses.select{ |x| x.survey_question_id == email_question_id }.first.try(:response)
-    dob = self.survey_question_responses.select{ |x| x.survey_question_id == dob_question_id }.first.try(:response)
-
-
-    User.new(:first_name => first_name, :last_name => last_name, :email => email, :dob => dob)
-  end
-
 
 end

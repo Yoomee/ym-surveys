@@ -5,6 +5,7 @@ class CreateYmSurveyQuestionGroups < ActiveRecord::Migration
       t.text :heading_text
       t.int  :position
       t.references :survey, :index => true
+      t.string :dependence_logic
 
       t.timestamps
     end

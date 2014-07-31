@@ -1,6 +1,7 @@
-<h1>Editing survey</h1>
+.container.js-editor-container
+  %h1 Editing survey
+  =render 'form'
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @survey %> |
-<%= link_to 'Back', surveys_path %>
+  =link_to 'Show', @survey
+  |
+  =link_to 'Back', surveys_path

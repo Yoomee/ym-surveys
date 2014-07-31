@@ -8,12 +8,15 @@ module YmSurveys::SurveySubmissionsController
     @submission = SurveySubmission.new(params[:survey_submission].merge({:user_id => current_user.try(:id)}))
     if @submission.is_valid?
       if @submission.last_step?
-        @submission.save
-        SurveyMailer.survey_completed(@submission, @submission.user).deliver if @submission.survey.email_text.present?
-        redirect_to survey_thanks_path
+        last_step
       else
         @submission.next_step!
-        @question_group = SurveyQuestionGroup.find @submission.current_step
+        if @submission.current_step > 0
+          @question_group = SurveyQuestionGroup.find @submission.current_step
+        else
+          last_step
+          return
+        end
         render :template => 'surveys/show'
       end
     else
@@ -32,6 +35,13 @@ module YmSurveys::SurveySubmissionsController
 
   def show
     @submission = SurveySubmission.find params[:id]
+  end
+
+  private
+  def last_step
+    @submission.save
+    SurveyMailer.survey_completed(@submission, @submission.user).deliver if @submission.survey.email_text.present?
+    redirect_to survey_thanks_path
   end
 
 end

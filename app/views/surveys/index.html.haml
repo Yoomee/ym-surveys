@@ -1,0 +1,14 @@
+%table.table.mt-2
+  %thead
+    %tr
+      %th Name
+      %th Description
+  %tbody
+    - @surveys.each do |survey|
+      %tr
+        %td= survey.name
+        %td= survey.description
+        %td= link_to 'View', survey
+        %td= link_to 'View Submissions', survey_survey_submissions_path(survey)
+
+= link_to 'New Survey', new_survey_path

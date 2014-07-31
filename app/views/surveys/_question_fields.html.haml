@@ -1,0 +1,10 @@
+.well.js-question-fields
+  = link_to_remove_association "Remove this question", f, :class => "pull-right"
+
+  .nested-fields.clear
+    =f.inputs do
+      =f.input :name, :input_html => { :rows => 2, :class => "js-question-name" }, :label => "Question title"
+      =f.input :field_type, :collection => [['Text', 'string'], ['Multi line text', 'text'], ['Date', 'date_picker'], ['Checkboxes', 'check_boxes', { :'data-options' => 'true'}], ['Checkboxes with other', 'check_boxes_with_other', { :'data-options' => 'true'}], ["Multiple choice", 'radio', { :'data-options' => 'true'}], ['List', 'select', { :'data-options' => 'true'}], ["File", :file]], :input_html => { :class => 'js-field-type' }, :include_blank => false
+      =f.input :required, :as => :boolean
+      =f.input :default_to, :collection => { "First name" => :first_name, "Last name" => :last_name, :Nickname => :display_name, "Date of birth" => "dob", "E-mail" => "email", "Phone" => "phone"}
+      =render 'options', :f => f

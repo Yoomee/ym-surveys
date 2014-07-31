@@ -11,3 +11,26 @@
  *= require_self
  *= require_tree .
  */
+
+.question-group-container {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.add-other {
+  opacity: .5;
+}
+
+ul.question-options li,
+.question-group-container ul li  {
+  list-style-type: none;
+}
+
+.reorder-bars {
+  cursor: move;
+  opacity: .5;
+}

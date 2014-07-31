@@ -5,10 +5,13 @@
       %dt.mt-1
         %strong=question.name
       %dd
-        -response = @submission.survey_question_responses.find_by_survey_question_id(question.id).try(:response)
+        -question_submission = @submission.survey_question_responses.find_by_survey_question_id(question.id)
+        -response = question_submission.try(:response)
         -if response.is_a?(Array)
           %ul
             -response.each do |x|
               %li=x
+        -elsif response.is_a? Dragonfly::ActiveModelExtensions::Attachment
+          =link_to "File Attachment", response.url
         -else
           =response

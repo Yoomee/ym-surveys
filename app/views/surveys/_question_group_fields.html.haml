@@ -1,0 +1,16 @@
+.question-group-container.js-question-group
+  .nested-fields
+    = f.inputs do
+      = f.input :heading
+      = f.input :heading_text, :input_html => { :rows => 3 }
+      =label_tag "Only show this page if question"
+      =select_tag :logic_question, [], :class => "form-control js-logic-question"
+      =label_tag "has the answer"
+      =select_tag :logic_answer, [], :class => "form-control js-logic-answer"
+      =f.input :dependence_logic, :as => :hidden, :input_html => { :class => "js-dependence-logic"}
+
+      %h3 Questions
+      =f.semantic_fields_for :questions do |group|
+        =render 'question_fields', :f => group
+      .links
+        =link_to_add_association 'Add question', f, :questions
