@@ -29,7 +29,7 @@ module YmSurveys::SurveySubmission
   def build_responses
     survey.question_groups.each do |question_group|
       question_group.questions.each do |question|
-        if !question.default_to.empty?
+        if !question.default_to.try(:empty?)
           question.assign_attributes({:field_format => question.default_to}, :without_protection => true)
           default_value = question.get_default(self.user) || nil
         end
