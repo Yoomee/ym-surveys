@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = YmSurveys::VERSION
   s.authors     = ["Yoomee"]
   s.email       = ["developers@yoomee.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of YmSurveys."
-  s.description = "TODO: Description of YmSurveys."
+  s.homepage    = "http://www.yoomee.com"
+  s.summary     = "Create and take multipage surveys"
+  s.description = "Lots of flexibility"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
