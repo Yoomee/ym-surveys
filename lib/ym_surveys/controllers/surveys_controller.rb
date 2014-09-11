@@ -5,7 +5,7 @@ module YmSurveys::SurveysController
   end
 
   def create
-    @survey = Survey.new(params[:survey])
+    @survey = Survey.new(survey_params)
     @survey.save
     redirect_to @survey
   end
@@ -27,7 +27,7 @@ module YmSurveys::SurveysController
   end
 
   def update
-    if @survey.update_attributes(params[:survey])
+    if @survey.update_attributes(survey_params)
       redirect_to @survey
     else
       render 'edit'
@@ -49,5 +49,10 @@ module YmSurveys::SurveysController
   def new
     question_group = @survey.question_groups.build
     question_group.questions.build
+  end
+
+  private
+  def survey_params
+    params.require(:survey).permit(permitted_survey_parameters)
   end
 end

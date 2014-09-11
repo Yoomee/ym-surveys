@@ -1,22 +1,7 @@
 -if @submission.survey.image.present?
-  =image_for(@submission.survey, "100x100#", :class => "mt-1")
-
-=semantic_form_for @submission, :url => survey_step_path(@submission.survey, @submission.current_step) do |f|
-  =f.inputs do
-    =f.input :survey_id, :as => :hidden
-    =f.input :current_step, :as => :hidden
-    %h2=@question_group.heading
-    %p=simple_format(substitute_user_placeholders(@question_group.heading_text, current_user))
-
-    =f.semantic_fields_for :survey_question _responses do |q|
-      -@question = q.object.survey_question
-        %div{:class => ("hide" unless @question.survey_question_group_id == @submission.current_step)}
-          %span.help-block You must be running the project
-        =q.question_input :response, q.object
-
-      =q.input :survey_question_id, :as => :hidden
-  =f.actions do
-    =f.action :submit, :label => @submission.last_step? ? "Finish" : "Next", :wrapper_html => { :class => 'pull-right mb-1' }
+  =image_for(@submission.survey, "100x100#", :class => "mv-4")
+-else
+  .mt-5
 
 -step_count = 100 / (@submission.survey.question_groups.count)
 -progress = (@submission.survey.question_groups.index(@question_group)) * step_count
@@ -24,3 +9,20 @@
   .progress
     .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{progress}", role: "progressbar", style: "width: #{progress}%;"}
       ="#{progress}%"
+
+=semantic_form_for @submission, :url => survey_step_path(@submission.survey, @submission.current_step_index) do |f|
+  =f.inputs do
+    =f.input :survey_id, :as => :hidden
+    =f.input :current_step, :as => :hidden
+    .block-header=@question_group.heading
+    .block.ph-2.pv-1.mb-3
+      .help-block.mb-2=simple_format(substitute_user_placeholders(@question_group.heading_text, current_user))
+
+      =f.semantic_fields_for :survey_question_responses do |q|
+        -if !(!!(q.object.survey_question_id.to_s =~ /18|19/))
+          -@question = q.object.survey_question
+          %div{:class => ("hide" unless @question.survey_question_group_id == @submission.current_step)}
+            =q.question_input :response, @question
+          =q.input :survey_question_id, :as => :hidden
+  =f.actions do
+    =f.action :submit, :label => @submission.last_step? ? "Finish" : "Next", :wrapper_html => { :class => 'pull-right mb-3' }

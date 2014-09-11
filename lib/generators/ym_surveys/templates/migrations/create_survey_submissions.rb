@@ -1,4 +1,4 @@
-class CreateymSurveySubmissions < ActiveRecord::Migration
+class CreateSurveySubmissions < ActiveRecord::Migration
   def change
     create_table :survey_submissions do |t|
       t.references :user, index: true

@@ -1,5 +1,7 @@
 require 'ym_core'
 require 'ym_permalinks'
+require 'formtastic'
+require 'formtastic-bootstrap'
 require 'cocoon'
 require "ym_surveys/engine"
 

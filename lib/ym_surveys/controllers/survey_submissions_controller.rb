@@ -5,7 +5,7 @@ module YmSurveys::SurveySubmissionsController
   end
 
   def create
-    @submission = SurveySubmission.new(params[:survey_submission].merge({:user_id => current_user.try(:id)}))
+    @submission = SurveySubmission.new(survey_submission_params.merge({:user_id => current_user.try(:id)}))
     if @submission.is_valid?
       if @submission.last_step?
         last_step
@@ -42,6 +42,10 @@ module YmSurveys::SurveySubmissionsController
     @submission.save
     SurveyMailer.survey_completed(@submission, @submission.user).deliver if @submission.survey.email_text.present?
     redirect_to survey_thanks_path
+  end
+
+  def survey_submission_params
+    params.require(:survey_submission).permit(permitted_survey_submission_parameters)
   end
 
 end
