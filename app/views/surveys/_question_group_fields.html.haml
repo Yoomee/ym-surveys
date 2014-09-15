@@ -1,6 +1,8 @@
 .question-group-container.js-question-group
   .nested-fields
+    %h3.js-page-number Page
     = f.inputs do
+      = f.hidden_field :position, :class => 'js-question-group-position'
       = f.input :heading
       = f.input :heading_text, :input_html => { :rows => 3 }
       =label_tag "Only show this page if question"

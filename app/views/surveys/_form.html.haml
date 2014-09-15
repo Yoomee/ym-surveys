@@ -5,13 +5,10 @@
     =f.input :image, :as => :image
     =f.input :thanks_url
 
-  -i = 1
   =f.semantic_fields_for :question_groups do |group|
-    %h3="Page #{i}"
-    -i = i + 1
     =render 'question_group_fields', :f => group
   .links
-    =link_to_add_association 'Add question group', f, :question_groups
+    =link_to_add_association 'Add page', f, :question_groups
 
   =f.actions do
     =f.action :submit, :button_html => {:class => 'btn btn-primary pull-right'}

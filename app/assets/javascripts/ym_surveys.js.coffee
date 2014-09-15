@@ -1,5 +1,6 @@
 $(document).ready ->
   initQuestionLogic()
+  addPageNumberAndPosition($('.js-question-group').first())
   $("ul.js-sortable-question-options").sortable()
   $(".js-question-group ul").sortable()
 
@@ -8,6 +9,10 @@ $(document).ready ->
 
   $(".js-editor-container").on "change", '.js-logic-question', ->
     logicQuestionChanged(this)
+
+  $(".js-editor-container").on 'cocoon:after-insert', (e, insertedItem) ->
+    if insertedItem.hasClass('js-question-group')
+      addPageNumberAndPosition(insertedItem)
 
   $(".js-editor-container").on 'cocoon:after-insert', '.js-question-group', ->
     initQuestionLogic()
@@ -36,6 +41,11 @@ $(document).ready ->
     $("input", newOption).val("Option #{$('li', $this.parents("ul.question-options")).length}").select()
     options = getQuestionOptions($this.parents(".js-question-fields"))
     $this.closest(".js-question-fields").trigger("optionRowAdded", [options]);
+
+addPageNumberAndPosition = (questionGroup) ->
+  numberOfPages = $('.js-question-group').length
+  questionGroup.find('h3.js-page-number').append(" " + numberOfPages)
+  questionGroup.find('input.js-question-group-position').val(numberOfPages)
 
 newOptionHTML = () ->
   coccoonIds = getCocoonIds(this.parents(".inputs").first().find("[id^='survey_question_groups_attributes']").first().attr("id"))
