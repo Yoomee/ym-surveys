@@ -19,6 +19,7 @@ class SurveysController < ApplicationController
           questions_attributes: [
              '_destroy',
              :name,
+             :position,
              :field_type,
              :required,
              :default_to,

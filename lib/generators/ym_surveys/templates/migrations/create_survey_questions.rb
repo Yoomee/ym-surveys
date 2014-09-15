@@ -2,6 +2,7 @@ class CreateSurveyQuestions < ActiveRecord::Migration
   def change
     create_table :survey_questions do |t|
       t.string :name
+      t.integer :position
       t.text :help_text
       t.string :field_type
       t.string :field_format

@@ -3,6 +3,7 @@
 
   .nested-fields.clear
     =f.inputs do
+      =f.hidden_field :position, :class => 'js-question-position'
       =f.input :name, :input_html => { :rows => 2, :class => "js-question-name" }, :label => "Question title"
       =f.input :field_type, :as => :select, :collection => [['Text', 'string'], ['Multi line text', 'text'], ['Date', 'date_picker'], ['Checkboxes', 'check_boxes', { :'data-options' => 'true'}], ['Checkboxes with other', 'check_boxes_with_other', { :'data-options' => 'true'}], ["Multiple choice", 'radio', { :'data-options' => 'true'}], ['List', 'select', { :'data-options' => 'true'}], ["File", :file]], :input_html => { :class => 'js-field-type' }, :include_blank => false
       =f.input :required, :as => :boolean
