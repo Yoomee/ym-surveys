@@ -1,7 +1,7 @@
 $(document).ready ->
-  initQuestionLogic()
   addPageNumberAndPositionToQuestionGroup($('.js-question-group').first())
   addPositionToQuestion($('.js-question-fields').first())
+  initQuestionLogic()
   $("ul.js-sortable-question-options").sortable()
   $(".js-question-group ul").sortable()
 
@@ -115,7 +115,9 @@ getQuestionOptions = (question) ->
 updateDependenceLogic = (group) ->
   question = $(".js-logic-question", group).val()
   answer = $(".js-logic-answer", group).val()
-  $(".js-dependence-logic", group).val("#{question}##{answer}")
+  if ((question.length > 0) && (answer.length > 0))
+    $(".js-dependence-logic", group).val("#{question}##{answer}")
+
 
 logicQuestionChanged = (select, answer) ->
   question = findQuestionWithName($(":selected", select).text())
