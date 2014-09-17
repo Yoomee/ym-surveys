@@ -63,7 +63,7 @@ module YmSurveys::SurveySubmission
   end
 
   def is_valid?
-    questions_to_validate = SurveyQuestionGroup.find(current_step).questions.map{|x| x.id}
+    questions_to_validate = ::SurveyQuestionGroup.find(current_step).questions.map{|x| x.id}
     survey_question_responses.each do |response|
       if questions_to_validate.include?(response.survey_question_id) && !response.valid?
         return false
