@@ -12,7 +12,7 @@ module YmSurveys::SurveySubmissionsController
       else
         @submission.next_step!
         if @submission.current_step > 0
-          @question_group = SurveyQuestionGroup.find @submission.current_step
+          @question_group = ::SurveyQuestionGroup.find @submission.current_step
         else
           last_step
           return
@@ -20,7 +20,7 @@ module YmSurveys::SurveySubmissionsController
         render :template => 'surveys/show'
       end
     else
-      @question_group = SurveyQuestionGroup.find @submission.current_step
+      @question_group = ::SurveyQuestionGroup.find @submission.current_step
       render :template => 'surveys/show'
     end
   end

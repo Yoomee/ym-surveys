@@ -6,8 +6,11 @@ module YmSurveys::SurveysController
 
   def create
     @survey = Survey.new(survey_params)
-    @survey.save
-    redirect_to @survey
+    if @survey.save
+      redirect_to surveys_path, message: 'Survey created'
+    else
+      render :new
+    end
   end
 
   def edit
@@ -28,7 +31,7 @@ module YmSurveys::SurveysController
 
   def update
     if @survey.update_attributes(survey_params)
-      redirect_to @survey
+      redirect_to surveys_path, message: 'Survey updated'
     else
       render 'edit'
     end

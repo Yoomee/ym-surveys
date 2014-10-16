@@ -30,7 +30,11 @@ module YmSurveys::SurveySubmission
     survey.question_groups.each do |question_group|
       question_group.questions.each do |question|
         if !question.default_to.try(:empty?)
-          question.assign_attributes({:field_format => question.default_to}, :without_protection => true)
+          if Rails::VERSION::MAJOR >= 4
+            question.assign_attributes({:field_format => question.default_to})
+          else
+            question.assign_attributes({:field_format => question.default_to}, :without_protection => true)
+          end
           default_value = question.get_default(self.user) || nil
         end
         self.survey_question_responses.build(:survey_question_id => question.id, :response => default_value)
@@ -63,7 +67,7 @@ module YmSurveys::SurveySubmission
   end
 
   def is_valid?
-    questions_to_validate = SurveyQuestionGroup.find(current_step).questions.map{|x| x.id}
+    questions_to_validate = ::SurveyQuestionGroup.find(current_step).questions.map{|x| x.id}
     survey_question_responses.each do |response|
       if questions_to_validate.include?(response.survey_question_id) && !response.valid?
         return false
