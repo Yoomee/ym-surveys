@@ -1,7 +1,7 @@
 $(document).ready ->
   initQuestionLogic()
-  addPageNumberAndPositionToQuestionGroup($('.js-question-group').first())
-  addPositionToQuestion($('.js-question-fields').first())
+  # addPageNumberAndPositionToQuestionGroup($('.js-question-group').first())
+  # addPositionToQuestion($('.js-question-fields').first())
   $("ul.js-sortable-question-options").sortable()
   $(".js-question-group ul").sortable()
 
