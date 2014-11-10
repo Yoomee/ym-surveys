@@ -3,8 +3,8 @@ PATH
   specs:
     ym_surveys (0.0.1)
       cocoon
-      rails
-      ym_core
+      rails (>= 3.2.13)
+      ym_core (~> 1.1.4)
       ym_permalinks (~> 1.0.3)
 
 GEM

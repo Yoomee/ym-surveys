@@ -1,6 +1,6 @@
 $(document).ready ->
-  # addPageNumberAndPositionToQuestionGroup($('.js-question-group').first())
-  # addPositionToQuestion($('.js-question-fields').first())
+  setPageNumberOfFirstQuestionGroup()
+  initQuestionLogic()
   $("ul.js-sortable-question-options").sortable()
   $(".js-question-group ul").sortable()
 
@@ -43,6 +43,9 @@ $(document).ready ->
     $("input", newOption).val("Option #{$('li', $this.parents("ul.question-options")).length}").select()
     options = getQuestionOptions($this.parents(".js-question-fields"))
     $this.closest(".js-question-fields").trigger("optionRowAdded", [options]);
+
+setPageNumberOfFirstQuestionGroup = () ->
+  $('.js-question-group').first().find('h3.js-page-number').html("Page 1")
 
 addPageNumberAndPositionToQuestionGroup = (questionGroup) ->
   numberOfPages = $('.js-question-group').length
