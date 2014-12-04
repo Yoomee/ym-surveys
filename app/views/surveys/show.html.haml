@@ -19,10 +19,9 @@
       .help-block.mb-2=simple_format(substitute_user_placeholders(@question_group.heading_text, current_user))
 
       =f.semantic_fields_for :survey_question_responses do |q|
-        -if !(!!(q.object.survey_question_id.to_s =~ /18|19/))
-          -@question = q.object.survey_question
-          %div{:class => ("hide" unless @question.survey_question_group_id == @submission.current_step)}
-            =q.question_input :response, @question
-          =q.input :survey_question_id, :as => :hidden
+        -@question = q.object.survey_question
+        %div{:class => ("hide" unless @question.survey_question_group_id == @submission.current_step)}
+          =q.question_input :response, @question
+        =q.input :survey_question_id, :as => :hidden
   =f.actions do
     =f.action :submit, :label => @submission.last_step? ? "Finish" : "Next", :wrapper_html => { :class => 'pull-right mb-3' }
