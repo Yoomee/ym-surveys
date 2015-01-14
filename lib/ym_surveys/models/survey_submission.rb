@@ -4,7 +4,11 @@ module YmSurveys::SurveySubmission
   def self.included(base)
     base.belongs_to :survey
     base.belongs_to :user
-    base.has_many :survey_question_responses
+    if Rails::VERSION::MAJOR >= 4
+      base.has_many :survey_question_responses, -> { joins(:survey_question).order('survey_questions.position') }
+    else
+      base.has_many :survey_question_responses
+    end
     base.send(:accepts_nested_attributes_for, :survey_question_responses)
     base.extend(ClassMethods)
   end
