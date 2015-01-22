@@ -1,5 +1,4 @@
 require 'ym_core'
-require 'ym_permalinks'
 require 'cocoon'
 require "ym_surveys/engine"
 
