@@ -5,9 +5,9 @@ module YmSurveys::SurveySubmission
     base.belongs_to :survey
     base.belongs_to :user
     if Rails::VERSION::MAJOR >= 4
-      base.has_many :survey_question_responses, -> { joins(:survey_question).order('survey_questions.position') }
+      base.has_many :survey_question_responses, -> { joins(:survey_question).order('survey_questions.position') }, dependent: :destroy
     else
-      base.has_many :survey_question_responses
+      base.has_many :survey_question_responses, dependent: :destroy
     end
     base.send(:accepts_nested_attributes_for, :survey_question_responses)
     base.extend(ClassMethods)
