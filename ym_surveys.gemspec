@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = YmSurveys::VERSION
   s.authors     = ["Yoomee"]
   s.email       = ["developers@yoomee.com"]
-  s.homepage    = "None"
+  s.homepage    = "http://yoomee.com"
   s.summary     = "Adds surveys to app"
   s.description = "Adds surveys to app"
 
