@@ -7,11 +7,11 @@ require "ym_surveys/version"
 Gem::Specification.new do |s|
   s.name        = "ym_surveys"
   s.version     = YmSurveys::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of YmSurveys."
-  s.description = "TODO: Description of YmSurveys."
+  s.authors     = ["Yoomee"]
+  s.email       = ["developers@yoomee.com"]
+  s.homepage    = "None"
+  s.summary     = "Adds surveys to app"
+  s.description = "Adds surveys to app"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
